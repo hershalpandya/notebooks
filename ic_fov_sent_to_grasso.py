@@ -3,7 +3,7 @@
 
 # #Import Libraries
 
-# In[1]:
+# In[3]:
 
 #import libraries
 get_ipython().magic(u'matplotlib inline')
@@ -20,7 +20,7 @@ from astropy.coordinates import Angle as astropyAngle
 
 # ## Define Functions. Note: All my functions accept angle in radians and return angle in radians
 
-# In[9]:
+# In[1]:
 
 
 def gal2eq_radians(lon,lat):
@@ -100,7 +100,7 @@ def eq2gal_radians(ra,dec):
     
     return lon,lat
 
-def in_icecube_FOV(lon,lat,use_astropy=False):
+def in_icecube_FOV(lon,lat,use_astropy=True):
     '''
     for a given lon, lat array of length N
     return a boolean array of length N 
@@ -125,7 +125,7 @@ def in_icecube_FOV(lon,lat,use_astropy=False):
     return bool_array
 
 # create mask over galactic coordinates
-def return_mask_over_ic_fov(nside,use_astropy=False):
+def return_mask_over_ic_fov(nside,use_astropy=True):
   
     npix=12*nside**2
 
@@ -134,7 +134,7 @@ def return_mask_over_ic_fov(nside,use_astropy=False):
     b = np.pi/2.-theta
     l = phi
 
-    mask = in_icecube_FOV(lon=l,lat=b,use_astropy=use_astropy)# for i,j in zip(l,b)]
+    mask = in_icecube_FOV(lon=l,lat=b,use_astropy=use_astropy)
     
     return mask
 
@@ -145,11 +145,11 @@ def move_gc_to_center(lon):
         
 
 
-# # Plot whole sky & Ic FOV (use_astropy=False)
+# # Plot whole sky & Ic FOV (use_astropy=True)
 
-# In[5]:
+# In[6]:
 
-use_astropy=False
+use_astropy=True
 nside=16
 npix=12*nside**2
 listpix=np.arange(npix)
@@ -173,7 +173,7 @@ plt.legend(fontsize='large')
 
 # ## Same plot as above but with GC in the middle of plot. By default the longitude values are 0 to 2pi but for plotting Galactic coordinates, one needs -pi to +pi and with x-axis flipped. That is what is done below
 
-# In[11]:
+# In[5]:
 
 l_t=move_gc_to_center(l)
 gc1_t=move_gc_to_center(gc1)
@@ -190,11 +190,11 @@ plt.legend(fontsize='large')
 plt.xlim([180,-180])
 
 
-# # Plot whole sky & Ic FOV (use_astropy=True)
+# # Plot whole sky & Ic FOV (use_astropy=False). To verify the older function.
 
-# In[11]:
+# In[7]:
 
-use_astropy=True
+use_astropy=False
 nside=16
 
 npix=12*nside**2
